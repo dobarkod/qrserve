@@ -1,6 +1,8 @@
 ## QRServe - HTTP microservice for QR Code generation
 
-This is an implementation of a simple HTTP microservice that generates
+[![Build Status](https://travis-ci.org/dobarkod/qrserve.svg?branch=master)](https://travis-ci.org/dobarkod/qrserve)
+
+An implementation of a simple HTTP microservice that generates
 QR Code upon request. All the QR heavy lifting is done by the
 [qrcode](https://github.com/skip2/go-qrcode/) Go package.
 
