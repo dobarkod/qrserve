@@ -1,5 +1,5 @@
 language: go
 go:
-  - release
+  - 1.7
 script:
   - go test
