@@ -28,7 +28,7 @@ const (
 func qrHandler(w http.ResponseWriter, req *http.Request) {
 	// First we need to parse the query string so we can pick up the values
 	if err := req.ParseForm(); err != nil {
-		http.Error(w, err.Error(), 400)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
@@ -36,18 +36,18 @@ func qrHandler(w http.ResponseWriter, req *http.Request) {
 	// code, in pixels),  and error correction level (one of L, Q, M or H).
 	data := req.FormValue("data")
 	if data == "" {
-		http.Error(w, "Data must not be empty", 400)
+		http.Error(w, "Data must not be empty", http.StatusBadRequest)
 		return
 	}
 
 	size, err := strconv.Atoi(req.FormValue("size"))
 	if err != nil {
-		http.Error(w, "Error parsing size: "+err.Error(), 400)
+		http.Error(w, "Error parsing size: "+err.Error(), http.StatusBadRequest)
 		return
 	}
 
 	if size < 1 || size > MaxSize {
-		http.Error(w, "Invalid image size: "+string(size), 400)
+		http.Error(w, "Invalid image size: "+string(size), http.StatusBadRequest)
 		return
 	}
 
@@ -64,7 +64,7 @@ func qrHandler(w http.ResponseWriter, req *http.Request) {
 	// Next we call the fine qrcode library to do the heavy lifting
 	image, err := qrcode.Encode(data, level, size)
 	if err != nil {
-		http.Error(w, "Error creating QR code: "+err.Error(), 500)
+		http.Error(w, "Error creating QR code: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
 
@@ -72,7 +72,7 @@ func qrHandler(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "image/png")
 	_, err = w.Write(image)
 	if err != nil {
-		http.Error(w, "Error writing image: "+err.Error(), 500)
+		http.Error(w, "Error writing image: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
 }
