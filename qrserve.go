@@ -51,17 +51,14 @@ func qrHandler(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	levelStr := req.FormValue("q")
-	var level qrcode.RecoveryLevel
-	switch levelStr {
+	level := qrcode.Medium // default
+	switch q := req.FormValue("q"); q {
 	case "L":
 		level = qrcode.Low
 	case "Q":
 		level = qrcode.High
 	case "H":
 		level = qrcode.Highest
-	default:
-		level = qrcode.Medium
 	}
 
 	// Next we call the fine qrcode library to do the heavy lifting
