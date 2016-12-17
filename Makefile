@@ -5,14 +5,14 @@ all: qrserve
 depends:
 	go get github.com/skip2/go-qrcode
 
-qrserve: qrserve.go
+qrserve: 
 	go build
 
-test: qrserve.go qrserve_test.go
+test:
 	go test
 
 install:
 	go install
 
 clean:
-	rm -f qrserve
+	go clean
