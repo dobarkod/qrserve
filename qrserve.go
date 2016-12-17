@@ -11,10 +11,11 @@ package main
 // library.
 import (
 	"fmt"
-	qrcode "github.com/skip2/go-qrcode"
 	"net/http"
 	"os"
 	"strconv"
+
+	qrcode "github.com/skip2/go-qrcode"
 )
 
 // We do have limits, and here they are - image can't be larger than 4k x 4k
@@ -71,7 +72,11 @@ func qrHandler(w http.ResponseWriter, req *http.Request) {
 
 	// Serve the resulting PNG image to the client and we're done!
 	w.Header().Set("Content-Type", "image/png")
-	w.Write(image)
+	_, err = w.Write(image)
+	if err != nil {
+		http.Error(w, "Error writing image: "+err.Error(), 500)
+		return
+	}
 }
 
 func main() {
