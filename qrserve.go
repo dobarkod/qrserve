@@ -11,6 +11,7 @@ package main
 // library.
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"strconv"
@@ -74,8 +75,7 @@ func qrHandler(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "image/png")
 	_, err = w.Write(image)
 	if err != nil {
-		http.Error(w, "Error writing image: "+err.Error(), http.StatusInternalServerError)
-		return
+		log.Printf("Error writing image: %v", err)
 	}
 }
 
