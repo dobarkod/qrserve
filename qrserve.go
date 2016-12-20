@@ -14,6 +14,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 
 	qrcode "github.com/skip2/go-qrcode"
 )
@@ -52,12 +53,13 @@ func qrHandler(w http.ResponseWriter, req *http.Request) {
 	}
 
 	level := qrcode.Medium // default
-	switch q := req.FormValue("q"); q {
-	case "L", "l":
+	q := req.FormValue("q")
+	switch strings.ToUpper(q) {
+	case "L":
 		level = qrcode.Low
-	case "Q", "q":
+	case "Q":
 		level = qrcode.High
-	case "H", "h":
+	case "H":
 		level = qrcode.Highest
 	}
 
