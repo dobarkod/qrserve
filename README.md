@@ -31,7 +31,7 @@ with the following query string parameters:
 
 * `data` - data (text) to be encoded, eg. an URL
 * `size` - size (in pixels), of the generated QR code (if less than required, will be automatically increased)
-* `q` - error correction level (optional); possible values are `L` (low), `M` (medium, default), `Q` (high), `H` (highest)
+* `q` - error correction level (optional); possible values are `L` or `l` (low), `M` or `m` (medium, default), `Q` or `q` (high) and `H` or `h` (highest)
 
 The service will respond with a status code of 200 and the generated QR
 code in PNG image format. In case of error, the service will return an

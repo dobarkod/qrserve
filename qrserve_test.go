@@ -18,7 +18,7 @@ func testGet(uri string) (rr *httptest.ResponseRecorder) {
 // Tests that qrHandler returns Bad Request if data param is missing
 func TestMissingData(t *testing.T) {
 	rr := testGet("/")
-	if rr.Code != 400 {
+	if rr.Code != http.StatusBadRequest {
 		t.Error("handler didn't return Bad Request on missing data")
 	}
 }
@@ -26,7 +26,7 @@ func TestMissingData(t *testing.T) {
 // Tests that qrHandler returns Bad Request if size is not an integer value
 func TestInvalidSize(t *testing.T) {
 	rr := testGet("/?data=test&size=large")
-	if rr.Code != 400 {
+	if rr.Code != http.StatusBadRequest {
 		t.Error("handler didn't return Bad Request on invalid size")
 	}
 }
@@ -34,7 +34,7 @@ func TestInvalidSize(t *testing.T) {
 // Tests that qrHandler returns Bad Request if size is too large
 func TestTooLarge(t *testing.T) {
 	rr := testGet("/?data=test&size=8192")
-	if rr.Code != 400 {
+	if rr.Code != http.StatusBadRequest {
 		t.Error("handler didn't return Bad Request on image size too large")
 	}
 }
@@ -43,7 +43,7 @@ func TestTooLarge(t *testing.T) {
 // all the params are set
 func TestGeneratesImage(t *testing.T) {
 	rr := testGet("/?data=test&size=100")
-	if rr.Code != 200 {
+	if rr.Code != http.StatusOK {
 		t.Error("handler didn't return status code 200 OK")
 	}
 
